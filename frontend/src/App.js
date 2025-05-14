@@ -9,15 +9,21 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('در حال ارسال اطلاعات...');
+
     try {
       const response = await axios.post('http://104.152.187.166:5000/deploy', {
         projectName,
         repoUrl,
         subdomain,
       });
-      setMessage(response.data.message);
+
+      setMessage(`✅ موفقیت: ${response.data.message || 'پروژه با موفقیت ارسال شد!'}`);
+      console.log('✅ پاسخ:', response.data);
+
     } catch (err) {
-      setMessage('خطا در ارسال اطلاعات');
+      console.error('❌ خطا:', err.response?.data || err.message);
+      setMessage(`❌ خطا: ${err.response?.data?.error || 'خطا در ارسال اطلاعات'}`);
     }
   };
 
@@ -39,9 +45,10 @@ function App() {
         </div>
         <button type="submit" style={{ marginTop: '1rem' }}>Deploy</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
     </div>
   );
 }
 
 export default App;
+
