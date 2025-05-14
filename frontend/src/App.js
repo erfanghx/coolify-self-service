@@ -10,7 +10,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/deploy', {
+      const response = await axios.post('http://104.152.187.166:5000/deploy', {
         projectName,
         repoUrl,
         subdomain,
